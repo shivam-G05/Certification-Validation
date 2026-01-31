@@ -24,6 +24,15 @@ const privateKey = process.env.PRIVATE_KEY.trim();
 const wallet = new ethers.Wallet(privateKey, provider);
 const contract = new ethers.Contract(contractData.address, contractData.abi, wallet);
 
+
+app.get("/", (req, res) => {
+  res.status(200).send("Server is running");
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // Upload certificate to IPFS
 app.post('/upload-certificate', upload.single('certificate'), async (req, res) => {
   try {
