@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2025 CertiChain. Built with blockchain technology.</p>
+          <p>&copy; 2026 CertiChain. Built with blockchain technology.</p>
           <p className="footer-credit">Powered by @shivamkgjj2005@gmail.com</p>
         </div>
       </div>
