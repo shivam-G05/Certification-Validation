@@ -8,6 +8,7 @@ const Navbar = () => {
   const [account, setAccount] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // NEW
 
   useEffect(() => {
     gsap.from(navRef.current, {
@@ -17,16 +18,13 @@ const Navbar = () => {
       ease: 'power3.out'
     });
 
-    // Check if wallet is already connected
     checkIfWalletIsConnected();
   }, []);
 
-  // Check if MetaMask is installed
   const isMetaMaskInstalled = () => {
     return typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask;
   };
 
-  // Check if wallet is already connected
   const checkIfWalletIsConnected = async () => {
     if (!isMetaMaskInstalled()) return;
 
@@ -40,9 +38,7 @@ const Navbar = () => {
     }
   };
 
-  // Connect to MetaMask
   const connectWallet = async () => {
-    // Check if MetaMask is installed
     if (!isMetaMaskInstalled()) {
       setShowModal(true);
       return;
@@ -51,17 +47,13 @@ const Navbar = () => {
     setIsConnecting(true);
 
     try {
-      // Request account access
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
 
       setAccount(accounts[0]);
 
-      // Listen for account changes
       window.ethereum.on('accountsChanged', handleAccountsChanged);
-      
-      // Listen for chain changes
       window.ethereum.on('chainChanged', () => {
         window.location.reload();
       });
@@ -79,7 +71,6 @@ const Navbar = () => {
     }
   };
 
-  // Handle account changes
   const handleAccountsChanged = (accounts) => {
     if (accounts.length === 0) {
       setAccount(null);
@@ -89,47 +80,86 @@ const Navbar = () => {
     }
   };
 
-  // Disconnect wallet
   const disconnectWallet = () => {
     setAccount(null);
-    // Note: MetaMask doesn't have a disconnect method, user must disconnect from extension
     alert('To fully disconnect, please disconnect from MetaMask extension');
   };
 
-  // Format address for display
   const formatAddress = (address) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
-  // Close modal
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  // NEW: Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // NEW: Close mobile menu when link is clicked
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       <nav ref={navRef} className="navbar">
         <div className="nav-container">
-          <Link to="/" className="nav-logo">
+          <Link to="/" className="nav-logo" onClick={closeMobileMenu}>
             <span className="logo-icon">🔐</span>
             <span className="logo-text">CertiChain</span>
           </Link>
 
-          <ul className="nav-menu">
+          {/* Hamburger Menu Button - Only visible on mobile */}
+          <button 
+            className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          {/* Navigation Menu */}
+          <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <li className="nav-item">
-              <Link to="/" className="nav-link">Home</Link>
+              <Link to="/" className="nav-link" onClick={closeMobileMenu}>Home</Link>
             </li>
             <li className="nav-item">
-              <Link to="/issue" className="nav-link">Issue</Link>
+              <Link to="/issue" className="nav-link" onClick={closeMobileMenu}>Issue</Link>
             </li>
             <li className="nav-item">
-              <Link to="/verify" className="nav-link">Verify</Link>
+              <Link to="/verify" className="nav-link" onClick={closeMobileMenu}>Verify</Link>
             </li>
             <li className="nav-item">
-              <Link to="/dashboard" className="nav-link">Dashboard</Link>
+              <Link to="/dashboard" className="nav-link" onClick={closeMobileMenu}>Dashboard</Link>
+            </li>
+
+            {/* Mobile Wallet Button */}
+            <li className="nav-item mobile-wallet">
+              {account ? (
+                <div className="wallet-connected-mobile">
+                  <span className="wallet-address">{formatAddress(account)}</span>
+                  <button className="disconnect-btn" onClick={() => { disconnectWallet(); closeMobileMenu(); }}>
+                    Disconnect
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  className="connect-btn-mobile" 
+                  onClick={() => { connectWallet(); closeMobileMenu(); }}
+                  disabled={isConnecting}
+                >
+                  {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                </button>
+              )}
             </li>
           </ul>
 
+          {/* Desktop Wallet Button */}
           <div className="nav-cta">
             {account ? (
               <div className="wallet-connected">
@@ -178,7 +208,7 @@ const Navbar = () => {
                   <span className="step-number">2</span>
                   <div className="step-content">
                     <h4>Download Extension</h4>
-                    <p>Click "Download" and select your browser (Chrome, Firefox, Brave, or Edge)</p>
+                    <p>Click "Download" and select your browser</p>
                   </div>
                 </div>
 
@@ -186,7 +216,7 @@ const Navbar = () => {
                   <span className="step-number">3</span>
                   <div className="step-content">
                     <h4>Install & Setup</h4>
-                    <p>Follow the installation wizard to create a new wallet or import an existing one</p>
+                    <p>Follow the installation wizard</p>
                   </div>
                 </div>
 
@@ -194,7 +224,7 @@ const Navbar = () => {
                   <span className="step-number">4</span>
                   <div className="step-content">
                     <h4>Secure Your Wallet</h4>
-                    <p><strong>Important:</strong> Write down your Secret Recovery Phrase and store it safely. Never share it with anyone!</p>
+                    <p><strong>Important:</strong> Write down your Secret Recovery Phrase and store it safely!</p>
                   </div>
                 </div>
 

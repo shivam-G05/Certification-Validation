@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  position: relative;
 }
 
 .nav-logo {
@@ -25,6 +26,7 @@
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: 700;
+  z-index: 1001;
 }
 
 .logo-icon {
@@ -45,6 +47,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 .nav-link {
@@ -53,12 +56,13 @@
   font-weight: 500;
   transition: all 0.3s;
   position: relative;
+  padding: 0.5rem 0;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: 0;
   left: 0;
   width: 0;
   height: 2px;
@@ -72,6 +76,10 @@
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+.nav-cta {
+  z-index: 1001;
 }
 
 .connect-btn {
@@ -91,22 +99,15 @@
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
+.connect-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
-
-@media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-  }
-  
-  .nav-container {
-    padding: 0 1rem;
-  }
-}
-
-/* Existing navbar styles remain the same */
 
 /* Wallet Connected State */
 .wallet-connected {
@@ -140,12 +141,154 @@
   transform: translateY(-2px);
 }
 
-.connect-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
 }
 
-/* Modal Styles */
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Wallet Button - Hidden on Desktop */
+.mobile-wallet {
+  display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  /* Show Hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide Desktop Wallet Button */
+  .nav-cta {
+    display: none;
+  }
+
+  /* Show Mobile Wallet Button */
+  .mobile-wallet {
+    display: block;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* Mobile Menu */
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 280px;
+    height: calc(100vh - 70px);
+    background: rgba(10, 10, 30, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    transition: right 0.3s ease;
+    border-left: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-link:hover {
+    background: rgba(102, 126, 234, 0.2);
+  }
+
+  /* Mobile Wallet Buttons */
+  .wallet-connected-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .wallet-connected-mobile .wallet-address {
+    width: 100%;
+    text-align: center;
+  }
+
+  .wallet-connected-mobile .disconnect-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .connect-btn-mobile {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+
+  .connect-btn-mobile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+
+  .connect-btn-mobile:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Modal Styles - Keep existing */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -161,12 +304,8 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
@@ -296,6 +435,7 @@
   gap: 15px;
   justify-content: center;
   margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .install-btn,
@@ -330,15 +470,10 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Responsive Design */
+/* Mobile Modal Adjustments */
 @media (max-width: 768px) {
   .modal-content {
     padding: 30px 20px;
-  }
-
-  .wallet-connected {
-    flex-direction: column;
-    gap: 8px;
   }
 
   .modal-header h2 {
@@ -346,8 +481,17 @@
   }
 
   .step {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .modal-actions {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+  }
+
+  .install-btn,
+  .cancel-btn {
+    width: 100%;
   }
 }
