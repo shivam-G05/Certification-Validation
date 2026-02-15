@@ -14,7 +14,7 @@ export const uploadCertificate = async (file, studentName) => {
   const formData = new FormData();
   formData.append("certificate", file);
   formData.append("studentName", studentName);
-  const response = await axios.post(`https://certification-validation-backend.onrender.com/upload-certificate`, formData, {
+  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//upload-certificate`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -23,7 +23,7 @@ export const uploadCertificate = async (file, studentName) => {
 };
 
 export const issueCertificate = async (studentName, course, ipfsHash) => {
-  const response = await axios.post(`https://certification-validation-backend.onrender.com/issue-certificate`, {
+  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//issue-certificate`, {
     studentName,
     course,
     ipfsHash
@@ -32,12 +32,12 @@ export const issueCertificate = async (studentName, course, ipfsHash) => {
 };
 
 export const verifyCertificate = async (certId) => {
-  const response = await axios.get(`https://certification-validation-backend.onrender.com/verify-certificate/${certId}`);
+  const response = await axios.get(`https://certification-validation-backend-o1k7.onrender.com//verify-certificate/${certId}`);
   return response.data;
 };
 
 export const revokeCertificate = async (certId) => {
-  const response = await axios.post(`https://certification-validation-backend.onrender.com/revoke-certificate/${certId}`);
+  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//revoke-certificate/${certId}`);
   return response.data;
 };
 
