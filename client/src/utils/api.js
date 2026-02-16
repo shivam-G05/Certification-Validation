@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import contractData from '../contractData.json';
 
-// const API_URL = 'http://localhost:5000';
+const API_URL = 'http://localhost:5000';
 
 // Use a public RPC or environment variable
 
@@ -14,7 +14,7 @@ export const uploadCertificate = async (file, studentName) => {
   const formData = new FormData();
   formData.append("certificate", file);
   formData.append("studentName", studentName);
-  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//upload-certificate`, formData, {
+  const response = await axios.post(`${API_URL}/upload-certificate`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -23,7 +23,7 @@ export const uploadCertificate = async (file, studentName) => {
 };
 
 export const issueCertificate = async (studentName, course, ipfsHash) => {
-  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//issue-certificate`, {
+  const response = await axios.post(`${API_URL}/issue-certificate`, {
     studentName,
     course,
     ipfsHash
@@ -32,12 +32,12 @@ export const issueCertificate = async (studentName, course, ipfsHash) => {
 };
 
 export const verifyCertificate = async (certId) => {
-  const response = await axios.get(`https://certification-validation-backend-o1k7.onrender.com//verify-certificate/${certId}`);
+  const response = await axios.get(`${API_URL}/verify-certificate/${certId}`);
   return response.data;
 };
 
 export const revokeCertificate = async (certId) => {
-  const response = await axios.post(`https://certification-validation-backend-o1k7.onrender.com//revoke-certificate/${certId}`);
+  const response = await axios.post(`${API_URL}/revoke-certificate/${certId}`);
   return response.data;
 };
 
