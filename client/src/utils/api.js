@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import contractData from '../contractData.json';
 
-const API_URL = 'https://certification-validation-backend-60s3.onrender.com/';
+const API_URL = 'https://certification-validation-backend-60s3.onrender.com';
 
 // Use a public RPC or environment variable
 
