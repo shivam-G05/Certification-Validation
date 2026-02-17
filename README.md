@@ -9,21 +9,21 @@ A full-stack decentralized application (dApp) for issuing, verifying, and revoki
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Environment Setup](#environment-setup)
-- [Deployment](#deployment)
-- [Running the Application](#running-the-application)
-- [API Endpoints](#api-endpoints)
-- [How It Works](#how-it-works)
-- [Smart Contract Details](#smart-contract-details)
-- [Screenshots](#screenshots)
-- [Live Demo](#live-demo)
-- [Contributing](#contributing)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Environment Setup](#-environment-setup)
+- [Deployment](#-deployment)
+- [Running the Application](#️-running-the-application)
+- [API Endpoints](#-api-endpoints)
+- [How It Works](#-how-it-works)
+- [Smart Contract Details](#-smart-contract-details)
+- [Screenshots](#-screenshots)
+- [Live Demo](#-live-demo)
+- [Contributing](#-contributing)
 - [License](#license)
 
 ---
@@ -562,7 +562,7 @@ Thumbs.db
 - GitHub: https://github.com/shivam-G05
 - LinkedIn: https://www.linkedin.com/in/shivam-goel-6236432a8/
 - Email: shivamkgjj2005@gmail.com
-LIVE URL:https://certification-validation-frontend-n2it.onrender.com/
+
 ---
 
 
